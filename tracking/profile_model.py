@@ -5,7 +5,7 @@ import time
 import importlib
 import _init_paths
 from torch import nn
-from lib.models.mixformer.mixformer_online import Attention
+from lib.models.mixformer_cvt.mixformer_online import Attention
 from thop import profile
 from thop.utils import clever_format
 
@@ -15,7 +15,7 @@ def parse_args():
     """
     parser = argparse.ArgumentParser(description='Parse args for training')
     # for train
-    parser.add_argument('--script', type=str, default='mixformer_online', choices=['mixformer', 'mixformer_online'],
+    parser.add_argument('--script', type=str, default='mixformer_online', choices=['mixformer', 'mixformer_online', 'mixformer_cvt_online'],
                         help='training script name')
     parser.add_argument('--config', type=str, default='baseline', help='yaml configure file name')
     parser.add_argument('--display_name', type=str, default='MixFormer')
@@ -185,7 +185,7 @@ if __name__ == "__main__":
     cfg.MODEL.BACKBONE.FREEZE_BN = False
     cfg.MODEL.HEAD_FREEZE_BN = False
     '''import stark network module'''
-    model_module = importlib.import_module('lib.models.mixformer')
+    model_module = importlib.import_module('lib.models.mixformer_cvt')
     if args.script == "mixformer_online":
         model_constructor = model_module.build_mixformer_online_score
         model = model_constructor(cfg)
